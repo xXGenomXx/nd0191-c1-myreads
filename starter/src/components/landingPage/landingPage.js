@@ -11,19 +11,27 @@ import ListBook from '../ListBook/ListBook'
 export const LandingPage = () => {
 
   const [showSearchPage, setShowSearchpage] = useState(false);
+  const [Books, setBooks] = useState([]);
+  const [reloadBooks, setReloadBooks] = useState(false);
 
   useEffect(() => {
-    let res = getAll()
-    console.log("Res ",res)
-  
-  },[])
+     getAll().then((result)=>{
+    console.log("result ",result)
+    setBooks(result)
 
+    })
+  
+  },[reloadBooks])
+
+  const reloadBooksFun = () =>{
+    setReloadBooks({reloadBooks:!reloadBooks})
+  }
   return (
     <Fragment>
     {showSearchPage ? (
         <SearchPage setShowSearchpage={setShowSearchpage} showSearchPage={showSearchPage} />
     ) : (
-      <ListBook setShowSearchpage={setShowSearchpage} showSearchPage={showSearchPage} />
+      <ListBook setShowSearchpage={setShowSearchpage} showSearchPage={showSearchPage} Books={Books} reloadBooksFun={reloadBooksFun} />
     )}
     </Fragment>
   );
