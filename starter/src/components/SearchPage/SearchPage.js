@@ -11,34 +11,49 @@ import MenuItem from '@mui/material/MenuItem';
 export const SearchPage = ({setShowSearchpage,showSearchPage}) => {
   const [searchWord, setSearchWord] = useState('');
   const [BooksSearchRessult, setBooksSearchRessult] = useState([]);
-  const [reloadBooksSearchRessult, setReloadBooksSearchRessult] = useState(false);
+  const debug =false
+  useEffect(() => {
+    {debug && console.log("Use") }
+    
+    },[])
 
   useEffect(() => {
-    console.log("BooksSearchRessult ",BooksSearchRessult)
+    {debug && console.log("BooksSearchRessult ",BooksSearchRessult) }
 if(searchWord){
     search(searchWord,10).then((result)=>{
-    console.log("result b",result)
+      {debug && console.log("result a",result) }
     if(result[0] && 
       result[0].title){
+
+        let counter = 1
+        {debug && console.log(`Books Length ${result.length}`);}
+
         // Get Books Shelfs Start
-        result?.map((Book, index) => {
-  get(Book.id).then((specificBook)=>{
-    console.log('specificBook.shelf ',specificBook.shelf);
-    Book.shelf = specificBook.shelf})
-           
-        }
-        )
+       
+        result.forEach(Book => {
+          {debug && console.log(`Book.id  ${Book.id}`); }
+      
+         get(Book.id).then((specificBook)=>{
+          {debug &&console.log(`specificBook.shelf ${counter}`, specificBook.shelf); }
+         Book.shelf =  specificBook.shelf
+         {debug && console.log(`Book.shelf ${counter}`,Book.shelf); }
+     
+      if(result.length=== counter){  setBooksSearchRessult(result)}
+         counter++}) ;
+          
+          });
+
         // Get Books Shelfs End
-    console.log("result c",result)
-    setBooksSearchRessult(result)
+    {debug && console.log("result c",result) }
+  
     }else{
       setBooksSearchRessult([])
     }
 
     })  }
-    console.log("BooksSearchRessult ",BooksSearchRessult)
+    {debug && console.log("BooksSearchRessult ",BooksSearchRessult) }
   
-  },[searchWord,reloadBooksSearchRessult])
+  },[searchWord])
 
 
   return (
@@ -79,10 +94,10 @@ if(searchWord){
                 <div className="book-shelf-changer"  key={'book-shelf-changer2'+index}>
                   <select value={Book.shelf} onChange={(e)=>{update(Book,e.target.value);}} >
                     <option value="disabled" disabled>Move to...</option>
-                    <option value="currentlyReading" selected={Book.shelf ==="currentlyReading"}>Currently Reading</option>
-                    <option value="wantToRead"  selected={Book.shelf ==="wantToRead"} >Want to Read</option>
-                    <option value="read" selected={Book.shelf ==="read"} >Read</option>
-                    <option value="none"  selected={Book.shelf ==="none"}>None</option>
+                    <option value="currentlyReading" >Currently Reading</option>
+                    <option value="wantToRead"   >Want to Read</option>
+                    <option value="read" >Read</option>
+                    <option value="none"  >None</option>
                   </select>
                 </div>
               </div>
