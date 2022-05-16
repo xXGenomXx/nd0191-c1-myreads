@@ -6,19 +6,19 @@ import { getAll,update } from "../../services/BooksAPI";
 // import AuthService from "../services/auth.service";
 // import { useNavigate } from "react-router-dom";
 
-export const Shelf = ({ShelfName,Key,Books,setReloadBooks,reloadBooks,reloadBooksFun}) => {
+export const Shelf = ({ShelfName,Id,Books,setReloadBooks,reloadBooks,reloadBooksFun}) => {
   
 
 
   return (
-    <div className="bookshelf" Key={"bookshelf"+Key}>
+    <div className="bookshelf" key={"bookshelf"+Id}>
     <h2 className="bookshelf-title">{ShelfName}</h2>
-    <div className="bookshelf-books" Key={"bookshelf-books"+Key}>
+    <div className="bookshelf-books" key={"bookshelf-books"+Id}>
       <ol className="books-grid">
       {
-        Books.map((Book, index) => {if(Book.shelf === Key){
+        Books.map((Book, index) => {if(Book.shelf === Id){
           return(
-            <li>
+            <li key={'Li'+index}>
             <div className="book" key={'book'+index}>
               <div className="book-top" key={'book-top'+index}>
                 <div
