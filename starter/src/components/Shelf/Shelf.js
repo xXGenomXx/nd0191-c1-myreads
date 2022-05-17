@@ -45,7 +45,7 @@ export const Shelf = ({ShelfName,Id,Books,setReloadBooks,reloadBooks,reloadBooks
                 </div>
               </div>
               <div className="book-title">{Book.title}</div>
-              <div className="book-authors">{Book.authors}</div>
+              <div className="book-authors">{Book.authors.join()}</div>
             </div>
           </li>
           )

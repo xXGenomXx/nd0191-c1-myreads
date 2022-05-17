@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getAll } from "../../services/BooksAPI";
 import PropTypes from 'prop-types'
 import Shelf from '../Shelf/Shelf'
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+
 
 
 
@@ -30,7 +32,7 @@ export const ListBook = ({setShowSearchpage,showSearchPage,Books,reloadBooksFun}
       </div>
     </div>
     <div className="open-search">
-      <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
+      <Link to="/searchPage">Add a book</Link>
     </div>
   </div>
   );

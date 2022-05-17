@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import {search,update,get } from "../../services/BooksAPI";
 import SelectIcon from "../../Pictures/Icons/selectIcon.png";
 import MenuItem from '@mui/material/MenuItem';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 
 
 // import AuthService from "../services/auth.service";
 // import { useNavigate } from "react-router-dom";
 
-export const SearchPage = ({setShowSearchpage,showSearchPage}) => {
+export const SearchPage = ({reloadBooksFun}) => {
   const [searchWord, setSearchWord] = useState('');
   const [BooksSearchRessult, setBooksSearchRessult] = useState([]);
   const debug =false
@@ -50,7 +51,9 @@ if(searchWord){
       setBooksSearchRessult([])
     }
 
-    })  }
+    })  }else {
+      setBooksSearchRessult([])
+    }
     {debug && console.log("BooksSearchRessult ",BooksSearchRessult) }
   
   },[searchWord])
@@ -59,12 +62,12 @@ if(searchWord){
   return (
     <div className="search-books">
     <div className="search-books-bar">
-      <a
+      <Link
         className="close-search"
-        onClick={() => setShowSearchpage(!showSearchPage)}
+        to="/"
       >
         Close
-      </a>
+      </Link>
       <div className="search-books-input-wrapper">
         <input 
         value={searchWord}
@@ -92,7 +95,7 @@ if(searchWord){
                   }}
                 ></div>
                 <div className="book-shelf-changer"  key={'book-shelf-changer2'+index}>
-                  <select value={Book.shelf} onChange={(e)=>{update(Book,e.target.value);}} >
+                  <select value={Book.shelf} onChange={(e)=>{update(Book,e.target.value).then(()=>reloadBooksFun())}} >
                     <option value="disabled" disabled>Move to...</option>
                     <option value="currentlyReading" >Currently Reading</option>
                     <option value="wantToRead"   >Want to Read</option>

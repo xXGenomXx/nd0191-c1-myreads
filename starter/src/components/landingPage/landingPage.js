@@ -2,6 +2,7 @@ import  { useState, useEffect,Fragment } from "react";
 import { getAll } from "../../services/BooksAPI";
 import SearchPage from '../SearchPage/SearchPage'
 import ListBook from '../ListBook/ListBook'
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 
 
@@ -10,7 +11,6 @@ import ListBook from '../ListBook/ListBook'
 
 export const LandingPage = () => {
 
-  const [showSearchPage, setShowSearchpage] = useState(false);
   const [Books, setBooks] = useState([]);
   const [reloadBooks, setReloadBooks] = useState(false);
 
@@ -28,11 +28,17 @@ export const LandingPage = () => {
   }
   return (
     <Fragment>
-    {showSearchPage ? (
-        <SearchPage setShowSearchpage={setShowSearchpage} showSearchPage={showSearchPage} />
-    ) : (
-      <ListBook setShowSearchpage={setShowSearchpage} showSearchPage={showSearchPage} Books={Books} reloadBooksFun={reloadBooksFun} />
-    )}
+    <Router>
+   
+    <Route exact path='/searchPage'>
+    <SearchPage reloadBooksFun={reloadBooksFun} />
+    </Route>)
+
+    <Route exact path='/'>
+    <ListBook Books={Books} reloadBooksFun={reloadBooksFun} />
+    </Route>
+
+    </Router>
     </Fragment>
   );
 };
